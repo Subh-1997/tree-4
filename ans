@@ -1,0 +1,93 @@
+Recover Binary Search Tree
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private TreeNode prev;
+    private TreeNode first;
+    private TreeNode mid ;
+    private TreeNode last;
+    public void inorder(TreeNode root){
+        if(root == null){
+            return ;
+        }
+        inorder(root.left);
+        if(prev!=null && prev.val>root.val){
+            if(first==null){
+                first = prev;
+                mid = root;
+            }else{
+                last=root;
+            }
+        }
+        prev = root;
+        inorder(root.right);
+
+    }
+    public void recoverTree(TreeNode root) {
+       first=mid=last=null;
+       prev = new TreeNode(Integer.MIN_VALUE);
+       inorder(root); 
+
+       if(first!=null && last!=null){
+           int t = first.val;
+           first.val=last.val;
+           last.val=t;
+       }else if(first!=null && mid!=null){
+           int t = first.val;
+           first.val=mid.val;
+           mid.val=t;
+       }
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2.Lowest Common Ancestor of a Binary Tree
+
+class Solution {
+   public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if( root == p || root == q || root == null)
+            return root;
+        TreeNode left = lowestCommonAncestor( root.left,  p,  q);
+        TreeNode right = lowestCommonAncestor( root.right,  p,  q);
+        if(left == null)
+            return right;
+        else if (right == null)
+            return left;
+        else
+            return root;
+        
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3. Diameter of Binary Tree
+
+class Solution {
+    public int height(TreeNode root, int diameter[]){
+        if(root==null) return 0;
+
+        int lh = height(root.left,diameter);
+        int rh = height(root.right,diameter);
+        diameter[0]=Math.max(diameter[0],lh+rh);
+        return 1+Math.max(lh,rh);
+    }
+    public int diameterOfBinaryTree(TreeNode root) {
+        int diameter[] = new int[1];
+        height(root,diameter);
+        return diameter[0];
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4.
