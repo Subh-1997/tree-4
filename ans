@@ -90,4 +90,87 @@ class Solution {
     }
 }
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-4.
+4.Find Common Nodes in two BSTs
+
+class Solution
+{
+    //Function to find the nodes that are common in both BST.
+    static ArrayList<Integer> list=new ArrayList<>();
+    static ArrayList<Integer>l1=new ArrayList<>();
+    static ArrayList<Integer>l2=new ArrayList<>();
+    
+	public static ArrayList<Integer> findCommon(Node root1,Node root2)
+    {
+        //code here
+        list=new ArrayList<>();
+        l1=new ArrayList<>();
+        l2=new ArrayList<>();
+        inorder(root1,l1);
+        inorder(root2,l2);
+        Common(root1,root2,l1,l2,list);
+        return list;
+    }
+    public static void inorder(Node root,ArrayList<Integer>list)
+    {
+        if(root==null)
+        {
+            return ;
+        }
+        inorder(root.left,list);
+        list.add(root.data);
+        inorder(root.right,list);
+    }
+    public static void Common(Node root1,Node root2,ArrayList<Integer>l1,ArrayList<Integer>l2,ArrayList<Integer>list)
+    {
+        int i=0,j=0;
+        while(i<l1.size()&&j<l2.size())
+        {
+            if(l1.get(i)<l2.get(j))
+            {
+                i++;
+            }
+            else if(l1.get(i)>l2.get(j))
+            {
+                j++;
+            }
+            else
+            {
+                list.add(l1.get(i));
+                i++;
+                j++;
+            }
+        }
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5.Same Tree
+
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+         if(p==null && q==null)return true;
+         if(p==null || q==null)return false;
+         if(p.val!=q.val){
+             return false;
+         }
+         return isSameTree(p.left, q.left)&&isSameTree(p.right, q.right);
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6.Kth Smallest Element in a BST
+
+class Solution {
+    public void helper(TreeNode root, int k, List<Integer> list){
+         if(root==null)return;
+         helper(root.left,k,list);
+         list.add(root.val);
+         helper(root.right,k,list);
+    }
+    public int kthSmallest(TreeNode root, int k) {
+        if(root==null)return 0;
+        List<Integer> list=new ArrayList<>();
+        helper(root,k,list);
+        return list.get(k-1);
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+7.
