@@ -173,4 +173,47 @@ class Solution {
     }
 }
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-7.
+7.Path to Given Node
+
+public class Solution {
+    static ArrayList<Integer> list; 
+    public static boolean getPath(TreeNode A, int B, ArrayList<Integer> list){
+        if(A == null){
+            return false;
+        }
+        if(A.val==B){
+            list.add(A.val);
+            return true;
+        }
+        
+        if( getPath(A.left,B,list) ||  getPath(A.right,B,list)){
+            list.add(A.val);
+            return true;
+        }
+        return false;
+    }
+    public ArrayList<Integer> solve(TreeNode A, int B) {
+       list = new ArrayList<>();
+       boolean ans = getPath(A,B,list);
+       if(ans){
+           Collections.reverse(list); 
+       }
+       return list;
+    }
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+8. Validate Binary Search Tree
+class Solution {
+    public boolean helper(TreeNode root,Integer max, Integer min){
+         if(root==null)return true;
+
+         if((max!=null && root.val>=max)|| (min != null && root.val <= min)){
+             return false;
+         }
+         return helper(root.left,root.val,min)&&helper(root.right,max,root.val);
+    }
+    public boolean isValidBST(TreeNode root) {
+       
+        return helper(root,null,null);
+    }
+}
